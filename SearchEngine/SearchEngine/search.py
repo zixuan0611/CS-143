@@ -43,8 +43,6 @@ def search(query, query_type, n_page):
     rewritten_query = _get_tokens(query)
 
     """TODO
-    Your code will go here. Refer to the specification for projects 1A and 1B.
-    But your code should do the following:
     1. Connect to the Postgres database.
     2. Graciously handle any errors that may occur (look into try/except/finally).
     3. Close any database connections when you're done.
