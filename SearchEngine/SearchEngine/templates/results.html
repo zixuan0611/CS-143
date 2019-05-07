@@ -1,0 +1,61 @@
+<html>
+	<head>
+		<title>TuneSearch Results for {{query}}</title>
+		<link rel="stylesheet" type="text/css" href="/static/searchengine.css" media="screen" />
+	</head>
+	<body>
+		<div id="results_top">
+			<div id="logo">
+				<img src="/static/header.png" width=100px height=30px>
+			</div>
+			<div id="searchbar">
+				 <form action="{{ url_for('dosearch') }}" method="GET">
+					<div>
+						<input type="radio" name="query_type" value="or" checked>
+						<label for="or">OR</label>
+						<input type="radio" name="query_type" value="and">
+						<label for="and">AND</label>
+						<input type="text" maxlength=50 size=50 name="query" value="{{query}}">
+						<input type="submit" value="Search">
+						<input type="hidden" name="n_page" value={{n_page}}>
+						<input type="hidden" name="n_row" value={{n_row}}>
+					</div>					
+				</form>
+			</div>
+		</div>
+
+		<p><strong>results: {{n_row}} in total</strong></p>
+
+		<p><strong>page {{n_page}} of {{(n_row/20)|round(0, 'ceil')|int}}</strong></p>
+
+		{% if results > 0 %}
+		<p><strong>{{ results }} results for </strong>{{query}}</p>
+
+		{% for result in search_results %}
+		<p><strong><a href="http://www.lyricsfreak.com{{ result[2] }}" target="_blank">{{ result[0] }}</a></strong> <em>by</em> {{ result[1] }} </p>
+		{% endfor %}
+		{% else %}
+
+		<p><strong>No results for </strong>{{query}}</p>
+		{% endif %}
+
+		<div>		
+		<form action="{{ url_for('dosearch') }}" method="GET">
+			<div>				
+				<input type="hidden" name="query_type" value="{{query_type}}">
+				<input type="hidden" name="query" value="{{query}}">
+				<input type="hidden" name="n_page" value={{n_page}}>
+				<input type="hidden" name="n_row" value={{n_row}}>
+				{% if n_page > 1%}
+				<button type="submit" name='previous' value='previous'>Previous</button>
+				{% endif %}
+				{% if n_page < n_row/20 %}
+				<button type="submit" name='next' value='next'>Next</button>
+				{% endif %}
+			</div>
+		</form>		
+		</div>
+		
+		
+	</body>
+</html>
