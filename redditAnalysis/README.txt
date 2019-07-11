@@ -1,0 +1,1 @@
+We used 10% sample for testing. The result seems to be reasonable.
